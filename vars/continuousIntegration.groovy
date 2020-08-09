@@ -1,6 +1,7 @@
 import com.maraquya.packageManager.PackageManager
+import com.maraquya.staticCodeAnalysis.StaticCodeAnalysis
 
-void call(PackageManager packageManager) {
+void call(PackageManager packageManager, StaticCodeAnalysis staticCodeAnalysis) {
     node {
         properties([buildDiscarder(logRotator(numToKeepStr: '2'))])
 
@@ -19,6 +20,9 @@ void call(PackageManager packageManager) {
         stage("Unit Test") {
             packageManager.unitTest()
         }
+
+        stage("Static Code Analysis") {
+            staticCodeAnalysis.run()
+        }
     }
 }
-
