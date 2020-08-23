@@ -1,21 +1,30 @@
 import com.homeaway.devtools.jenkins.testing.JenkinsPipelineSpecification
 import com.maraquya.packageManager.PackageManager
 import com.maraquya.staticCodeAnalysis.StaticCodeAnalysis
+import com.maraquya.ContinuousIntegration
 
 class ContinuousIntegrationSpec extends JenkinsPipelineSpecification {
-    private continuousIntegrationVar = null
-    private PackageManager packageManager = Mock()
-    private StaticCodeAnalysis staticCodeAnalysis = Mock()
+    private ContinuousIntegration continuousIntegration
+    private PackageManager packageManager
+    private StaticCodeAnalysis staticCodeAnalysis
 
     void setup() {
-        continuousIntegrationVar = loadPipelineScriptForTest("vars/continuousIntegration.groovy")
-        continuousIntegrationVar.getBinding().setVariable("scm", null)
+        this.packageManager = Mock(PackageManager)
+        this.staticCodeAnalysis = Mock(StaticCodeAnalysis)
+        continuousIntegration = new ContinuousIntegration(
+            getPipelineMock("CpsScript"),
+            this.packageManager,
+            this.staticCodeAnalysis
+        )
+        explicitlyMockPipelineVariable("scm")
         explicitlyMockPipelineStep('properties')
     }
 
     void "[continuousIntegration] logRotator numToKeep"() {
         when:
-        continuousIntegrationVar(this.packageManager, this.staticCodeAnalysis)
+        node {
+            this.continuousIntegration.execute()
+        }
 
         then:
         1 * getPipelineMock("logRotator.call")(['numToKeepStr':'2'])
@@ -23,7 +32,9 @@ class ContinuousIntegrationSpec extends JenkinsPipelineSpecification {
 
     void "[continuousIntegration] stages"() {
         when:
-        continuousIntegrationVar(this.packageManager, this.staticCodeAnalysis)
+        node {
+            this.continuousIntegration.execute()
+        }
 
         then:
         1 * this.getPipelineMock("node").call(_)
@@ -42,7 +53,9 @@ class ContinuousIntegrationSpec extends JenkinsPipelineSpecification {
 
     void "[continuousIntegration] stage Checkout"() {
         when:
-        continuousIntegrationVar(this.packageManager, this.staticCodeAnalysis)
+        node {
+            this.continuousIntegration.execute()
+        }
 
         then:
         1 * getPipelineMock("checkout")(_)
@@ -50,7 +63,9 @@ class ContinuousIntegrationSpec extends JenkinsPipelineSpecification {
 
     void "[continuousIntegration] stage Install"() {
         when:
-        continuousIntegrationVar(this.packageManager, this.staticCodeAnalysis)
+        node {
+            this.continuousIntegration.execute()
+        }
 
         then:
         1 * this.packageManager.install()
@@ -58,7 +73,9 @@ class ContinuousIntegrationSpec extends JenkinsPipelineSpecification {
 
     void "[continuousIntegration] stage Check Style"() {
         when:
-        continuousIntegrationVar(this.packageManager, this.staticCodeAnalysis)
+        node {
+            this.continuousIntegration.execute()
+        }
 
         then:
         1 * this.packageManager.checkStyle()
@@ -66,7 +83,9 @@ class ContinuousIntegrationSpec extends JenkinsPipelineSpecification {
 
     void "[continuousIntegration] stage Unit Test"() {
         when:
-        continuousIntegrationVar(this.packageManager, this.staticCodeAnalysis)
+        node {
+            this.continuousIntegration.execute()
+        }
 
         then:
         1 * this.packageManager.unitTest()
@@ -74,7 +93,9 @@ class ContinuousIntegrationSpec extends JenkinsPipelineSpecification {
 
     void "[continuousIntegration] stage Static Code Analysis"() {
         when:
-        continuousIntegrationVar(this.packageManager, this.staticCodeAnalysis)
+        node {
+            this.continuousIntegration.execute()
+        }
 
         then:
         1 * this.staticCodeAnalysis.run()

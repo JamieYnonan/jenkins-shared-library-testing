@@ -1,6 +1,7 @@
 import com.maraquya.packageManager.Composer
 import com.maraquya.virtualization.Docker
 import com.maraquya.staticCodeAnalysis.SonarQube
+import com.maraquya.ContinuousIntegration
 
 void call(script, String dockerImage = null) {
     Docker docker = new Docker(script)
@@ -10,5 +11,9 @@ void call(script, String dockerImage = null) {
         composer.dockerImage = dockerImage
     }
 
-    continuousIntegration(composer, sonarQube)
+    ContinuousIntegration continuousIntegration = new ContinuousIntegration(script, composer, sonarQube)
+
+    node {
+        continuousIntegration.execute()
+    }
 }

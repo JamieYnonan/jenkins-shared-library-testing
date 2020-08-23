@@ -1,28 +1,18 @@
 import com.maraquya.packageManager.PackageManager
 import com.maraquya.staticCodeAnalysis.StaticCodeAnalysis
+import com.maraquya.ContinuousIntegration
 
 void call(PackageManager packageManager, StaticCodeAnalysis staticCodeAnalysis) {
+    echo "script"
+    echo ${script}
+    echi "this"
+    echo ${this}
+    ContinuousIntegration continuousIntegration = new ContinuousIntegration(
+        packageManager,
+        staticCodeAnalysis
+    )
+
     node {
-        properties([buildDiscarder(logRotator(numToKeepStr: '2'))])
-
-        stage("Checkout") {
-            checkout scm
-        }
-
-        stage("Install") {
-            packageManager.install()
-        }
-
-        stage("Check Style") {
-            packageManager.checkStyle()
-        }
-
-        stage("Unit Test") {
-            packageManager.unitTest()
-        }
-
-        stage("Static Code Analysis") {
-            staticCodeAnalysis.run()
-        }
+        continuousIntegration.execute()
     }
 }
