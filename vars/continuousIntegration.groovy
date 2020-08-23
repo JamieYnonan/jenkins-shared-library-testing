@@ -4,7 +4,7 @@ import com.maraquya.ContinuousIntegration
 
 void call(PackageManager packageManager, StaticCodeAnalysis staticCodeAnalysis) {
     ContinuousIntegration continuousIntegration = new ContinuousIntegration(
-        script,
+        this,
         packageManager,
         staticCodeAnalysis
     )
