@@ -13,6 +13,14 @@ class Npm implements PackageManager {
         this.docker = docker
     }
 
+    void setProjectPath(String projectPath) {
+        this.projectPath = projectPath
+    }
+
+    void setDockerImage(String dockerImage) {
+        this.dockerImage = dockerImage
+    }
+
     void install() {
         this.execCommand("npm install")
     }

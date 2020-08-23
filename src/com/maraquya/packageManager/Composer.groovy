@@ -3,7 +3,7 @@ package com.maraquya.packageManager
 import com.maraquya.virtualization.Docker
 
 class Composer implements PackageManager, Serializable {
-    private String projectPath = 'app'
+    private String projectPath = ''
     private String dockerImage = "composer:latest"
     private Docker docker
     private script
@@ -11,6 +11,14 @@ class Composer implements PackageManager, Serializable {
     Composer(script, Docker docker) {
         this.script = script
         this.docker = docker
+    }
+
+    void setProjectPath(String projectPath) {
+        this.projectPath = projectPath
+    }
+
+    void setDockerImage(String dockerImage) {
+        this.dockerImage = dockerImage
     }
 
     void install() {

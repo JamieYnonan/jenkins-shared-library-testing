@@ -4,10 +4,9 @@ import com.maraquya.packageManager.PackageManager
 import com.maraquya.staticCodeAnalysis.StaticCodeAnalysis
 
 class ContinuousIntegration implements Serializable {
-
-    private final PackageManager packageManager
-    private final StaticCodeAnalysis staticCodeAnalysis
-    private final script
+    private PackageManager packageManager
+    private StaticCodeAnalysis staticCodeAnalysis
+    private script
 
     ContinuousIntegration(
         script,

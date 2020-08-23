@@ -3,14 +3,17 @@ import com.maraquya.virtualization.Docker
 import com.maraquya.staticCodeAnalysis.SonarQube
 import com.maraquya.ContinuousIntegration
 
-void call(script, String dockerImage = null) {
-    Docker docker = new Docker(script)
-    Npm npm = new Npm(script, docker)
-    SonarQube sonarQube = new SonarQube(script, docker)
+void call(String projectPath = '', String dockerImage = null) {
+    Docker docker = new Docker(this)
+    Npm npm = new Npm(this, docker)
+    npm.setProjectPath(projectPath)
     if (dockerImage) {
-        npm.dockerImage = dockerImage
+        npm.setDockerImage(dockerImage)
     }
-    ContinuousIntegration continuousIntegration = new ContinuousIntegration(script, npm, sonarQube)
+    SonarQube sonarQube = new SonarQube(this, docker)
+    sonarQube.setProjectPath(projectPath)
+
+    ContinuousIntegration continuousIntegration = new ContinuousIntegration(this, npm, sonarQube)
     node {
         continuousIntegration.execute()
     }
