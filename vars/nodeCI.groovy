@@ -10,7 +10,7 @@ void call(script, String dockerImage = null) {
     if (dockerImage) {
         npm.dockerImage = dockerImage
     }
-    ContinuousIntegration continuousIntegration = new ContinuousIntegration(npm, sonarQube)
+    ContinuousIntegration continuousIntegration = new ContinuousIntegration(script, npm, sonarQube)
     node {
         continuousIntegration.execute()
     }
