@@ -19,7 +19,7 @@ class SonarQube implements Serializable, StaticCodeAnalysis {
         ]) {
             this.docker.run(
                 dockerImage,
-                "-Dsonar.login=${this.script.env.SONAR_TOKEN}",
+                "sonar-scanner -X -Dsonar.login=${this.script.env.SONAR_TOKEN} ",
                 "--user=\"\$(id -u):\$(id -g)\" " +
                     "-e SRC_PATH=\"/app\" -e SONAR_HOST_URL=${this.script.env.SONAR_HOST_URL} " +
                     "-v ${this.script.env.WORKSPACE}/${this.projectPath}:/app " +
