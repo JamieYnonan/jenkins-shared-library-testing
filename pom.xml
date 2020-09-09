@@ -26,8 +26,8 @@
     </repositories>
 
     <properties>
-        <maven.compiler.source>1.6</maven.compiler.source>
-        <maven.compiler.target>1.6</maven.compiler.target>
+        <maven.compiler.source>1.8</maven.compiler.source>
+        <maven.compiler.target>1.8</maven.compiler.target>
 
         <groovy.core.version>2.4.12</groovy.core.version>
         <groovy.gmaven.pluginVersion>1.9.0</groovy.gmaven.pluginVersion>

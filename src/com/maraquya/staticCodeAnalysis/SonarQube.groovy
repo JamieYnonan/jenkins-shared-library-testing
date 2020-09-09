@@ -3,18 +3,15 @@ package com.maraquya.staticCodeAnalysis
 import com.maraquya.virtualization.Docker
 
 class SonarQube implements Serializable, StaticCodeAnalysis {
-    private String projectPath = ""
     private String dockerImage = "sonarsource/sonar-scanner-cli:4.3"
     private Docker docker
+    private String absoluteProjectPath
     private script
 
-    SonarQube(script, Docker docker) {
+    SonarQube(script, Docker docker, String absoluteProjectPath) {
         this.script = script
         this.docker = docker
-    }
-
-    void setProjectPath(String projectPath) {
-        this.projectPath = projectPath
+        this.absoluteProjectPath = absoluteProjectPath
     }
 
     void setDockerImage(String dockerImage) {
@@ -30,7 +27,7 @@ class SonarQube implements Serializable, StaticCodeAnalysis {
                 "sonar-scanner -Dsonar.login=${this.script.env.SONAR_TOKEN} ",
                 "--user=\"\$(id -u):\$(id -g)\" " +
                     "-e SRC_PATH=\"/app\" -e SONAR_HOST_URL=${this.script.env.SONAR_HOST_URL} " +
-                    "-v ${this.script.env.WORKSPACE}/${this.projectPath}:/app " +
+                    "-v ${this.absoluteProjectPath}:/app " +
                     "-w /app"
             );
         }

@@ -11,7 +11,6 @@ void call(String projectPath = '', String dockerImage = null) {
         npm.setDockerImage(dockerImage)
     }
     SonarQube sonarQube = new SonarQube(this, docker)
-    sonarQube.setProjectPath(projectPath)
 
     ContinuousIntegration continuousIntegration = new ContinuousIntegration(this, npm, sonarQube)
     node {

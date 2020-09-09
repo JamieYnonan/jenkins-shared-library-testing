@@ -3,18 +3,17 @@ package com.maraquya.packageManager
 import com.maraquya.virtualization.Docker
 
 class Composer implements PackageManager, Serializable {
-    private String projectPath = ''
+    private static final String INSTALL_FLAGS = "--no-ansi --no-cache --no-interaction " +
+        "--no-progress --prefer-dist --optimize-autoloader"
     private String dockerImage = "composer:latest"
     private Docker docker
+    private String absoluteProjectPath
     private script
 
-    Composer(script, Docker docker) {
+    Composer(script, Docker docker, String absoluteProjectPath) {
         this.script = script
         this.docker = docker
-    }
-
-    void setProjectPath(String projectPath) {
-        this.projectPath = projectPath
+        this.absoluteProjectPath = absoluteProjectPath
     }
 
     void setDockerImage(String dockerImage) {
@@ -22,14 +21,14 @@ class Composer implements PackageManager, Serializable {
     }
 
     void install() {
-        this.execCommand("composer install --no-ansi --no-cache --no-interaction")
+        this.execCommand("composer i ${INSTALL_FLAGS}")
     }
 
     private void execCommand(final String command) {
         this.docker.run(
             this.dockerImage,
             command,
-            "-v ${this.script.env.WORKSPACE}/${this.projectPath}:/app"
+            "-v ${this.absoluteProjectPath}:/app"
         )
     }
 

@@ -5,13 +5,11 @@ import com.maraquya.ContinuousIntegration
 
 void call(String projectPath = '', String dockerImage = null) {
     Docker docker = new Docker(this)
-    Composer composer = new Composer(this, docker)
-    composer.setProjectPath(projectPath)
+    Composer composer = new Composer(this, docker, "${env.WORKSPACE}/${projectPath}")
     if (dockerImage) {
         composer.setDockerImage(dockerImage)
     }
-    SonarQube sonarQube = new SonarQube(this, docker)
-    sonarQube.setProjectPath(projectPath)
+    SonarQube sonarQube = new SonarQube(this, docker, "${env.WORKSPACE}/${projectPath}")
 
     ContinuousIntegration continuousIntegration = new ContinuousIntegration(this, composer, sonarQube)
 
