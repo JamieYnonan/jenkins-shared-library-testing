@@ -1,5 +1,6 @@
+package com.maraquya.packageManager
+
 import com.homeaway.devtools.jenkins.testing.JenkinsPipelineSpecification
-import com.maraquya.packageManager.Composer
 import com.maraquya.virtualization.Docker
 import org.jenkinsci.plugins.workflow.cps.CpsScript
 
