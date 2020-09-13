@@ -1,7 +1,8 @@
+package com.maraquya
+
 import com.homeaway.devtools.jenkins.testing.JenkinsPipelineSpecification
 import com.maraquya.packageManager.PackageManager
 import com.maraquya.staticCodeAnalysis.StaticCodeAnalysis
-import com.maraquya.ContinuousIntegration
 
 class ContinuousIntegrationSpec extends JenkinsPipelineSpecification {
     private ContinuousIntegration continuousIntegration
