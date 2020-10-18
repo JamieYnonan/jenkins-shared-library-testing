@@ -3,7 +3,7 @@ package com.maraquya.staticCodeAnalysis
 import com.maraquya.virtualization.Docker
 
 class SonarQube implements Serializable, StaticCodeAnalysis {
-    private String dockerImage = "sonarsource/sonar-scanner-cli:4.4"
+    private String dockerImage = "sonarsource/sonar-scanner-cli:4.5"
     private Docker docker
     private String absoluteProjectPath
     private script
@@ -18,6 +18,12 @@ class SonarQube implements Serializable, StaticCodeAnalysis {
         this.script.steps.withCredentials([
             this.script.string(credentialsId: 'sonar', variable: 'SONAR_TOKEN')
         ]) {
+            if (this.script.env.SONAR_TOKEN == null) {
+                throw new Exception("You must register the \"sonar\" credential")
+            }
+            if (this.script.env.SONAR_HOST_URL == null) {
+                throw new Exception("You must register the \"SONAR_HOST_URL\" variable")
+            }
             this.docker.run(
                 dockerImage,
                 "sonar-scanner -Dsonar.login=${this.script.env.SONAR_TOKEN}",
