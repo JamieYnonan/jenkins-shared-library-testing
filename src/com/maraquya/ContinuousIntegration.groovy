@@ -37,6 +37,7 @@ class ContinuousIntegration implements Serializable {
 
         this.script.stage("Unit Test") {
             this.packageManager.unitTest()
+            this.script.junit('**/build/**/*.xml')
         }
 
         this.script.stage("Static Code Analysis") {
