@@ -15,12 +15,8 @@ class SonarQube implements Serializable, StaticCodeAnalysis {
     }
 
     void run() {
-        this.script.steps.withCredentials([
-            this.script.string(credentialsId: 'sonar', variable: 'SONAR_TOKEN')
-        ]) {
-            this.executeSonarScanner()
-            this.checkQualityGate()
-        }
+        this.executeSonarScanner()
+        this.checkQualityGate()
     }
 
     private void executeSonarScanner() {
