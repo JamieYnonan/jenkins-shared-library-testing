@@ -41,7 +41,7 @@
         <jenkins.workflow.basic.steps.version>2.6</jenkins.workflow.basic.steps.version>
         <jenkins.workflow.durable.task.steps.version>2.21</jenkins.workflow.durable.task.steps.version>
         <jenkins.pipeline.stage.step.version>2.3</jenkins.pipeline.stage.step.version>
-        <jenkins.git.version>3.9.1</jenkins.git.version>
+        <jenkins.git.version>4.11.2</jenkins.git.version>
 
         <junit.version>4.13.1</junit.version>
         <junit.plugin.version>1.24</junit.plugin.version>
