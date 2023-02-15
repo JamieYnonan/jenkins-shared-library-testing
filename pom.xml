@@ -44,7 +44,7 @@
         <jenkins.git.version>3.9.1</jenkins.git.version>
 
         <junit.version>4.13.1</junit.version>
-        <junit.plugin.version>1.24</junit.plugin.version>
+        <junit.plugin.version>1166.va_436e268e972</junit.plugin.version>
         <surefire.pluginVersion>2.22.0</surefire.pluginVersion>
         <jacoco.pluginVersion>0.8.5</jacoco.pluginVersion>
 
